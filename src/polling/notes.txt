@@ -1,0 +1,11 @@
+USER: $USER"@"uname -n
+KERNEL: uname -r
+
+Packages:
+echo "Total packages: $(pacman -Q | wc -l)"
+echo "Explicitly installed: $(pacman -Qe | wc -l)"
+echo "Foreign (AUR/manual): $(pacman -Qm | wc -l)"
+
+shell is kinda hard to get printed out like this, perhaps consider other options. 
+
+consider architecture, cpu, ram, terminal, window manager
