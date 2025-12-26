@@ -1,4 +1,4 @@
-#include "easyc.h"
+#include <easyc.h>
 #include "neocard.h"
 
 int main() {
