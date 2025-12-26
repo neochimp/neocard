@@ -1,2 +1,2 @@
-# Neocard
+# neocard
 Linux Stat Tracker
