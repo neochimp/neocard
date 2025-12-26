@@ -33,7 +33,8 @@ void DrawAge(Canvas c, size_t x, size_t y) {
 }
 
 void DrawKernel(Canvas c, size_t x, size_t y) {
-	WriteCanvasH(c, x, y, "KERNEL: 6.17.9-arch1-1");
+  UserInfo user = GetUserInfo();
+	WriteCanvasH(c, x, y, user.kernel);
 }
 
 void DrawPackages(Canvas c, size_t x, size_t y) {
