@@ -1,8 +1,10 @@
 #include "canvas.h"
 #include "canvas/graphics.h"
+#include "canvas/ascii.h"
 #include <string.h>
 #include <easymemory.h>
 #include <easylogger.h>
+#include <locale.h>
 
 Canvas GenerateCanvas(size_t w, size_t h) {
 	Canvas can = (Canvas){ w, h, EZ_ALLOC((w*h) + 1 + h, sizeof(char)) };
@@ -56,6 +58,7 @@ CanvasWriteError WriteCanvasV(Canvas canvas, size_t x, size_t y, const char* buf
 }
 
 void PrintCanvas(Canvas canvas) {
+	setlocale(LC_ALL, "");
 	if (canvas.buffer == NULL) {
 		EZ_ERROR("Cannot print canvas with null buffer");
 		return;
@@ -64,7 +67,13 @@ void PrintCanvas(Canvas canvas) {
 		EZ_ERROR("Canvas buffer overflow detected");
 		return;
 	}
-	printf("%s\n", canvas.buffer);
+	size_t len = (canvas.w+1)*canvas.h + 1;
+	wchar_t* widebuff = (wchar_t*)EZ_ALLOC(len, sizeof(wchar_t));
+	for (size_t i = 0; i < len; i++) {
+		widebuff[i] = ExtendAscii(canvas.buffer[i]);
+	}
+	wprintf(L"%ls", widebuff);
+	EZ_FREE(widebuff);
 }
 
 void CanvasTest() {
@@ -75,10 +84,10 @@ void CanvasTest() {
 
 Canvas CardCanvas() {
 	Canvas c = GenerateCanvas(67, 21);
-	WriteCanvasH(c, 0, 0, "-------------------------------------------------------------------");
-	WriteCanvasV(c, 0, 1, "|||||||||||||||||||");
-	WriteCanvasV(c, 66, 1, "|||||||||||||||||||");
-	WriteCanvasH(c, 0, 20, "-------------------------------------------------------------------");
+	WriteCanvasH(c, 0, 0, "\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB7");
+	WriteCanvasV(c, 0, 1, "\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3\xB3");
+	WriteCanvasV(c, 66, 1, "\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA\xBA");
+	WriteCanvasH(c, 0, 20, "\xD4\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBC");
 	DrawLogo(c, 53, 1);
 	DrawPortrait(c, 2, 1);
 	DrawUsername(c, 22, 1);
