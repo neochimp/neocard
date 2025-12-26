@@ -1,6 +1,6 @@
 #include "graphics.h"
-#include "../polling/commands.h"
-
+#include "polling/commands.h"
+#include "polling/identity.h"
 
 void DrawLogo(Canvas c, size_t x, size_t y) {
 	WriteCanvasH(c, x, y, "     /\\");
@@ -21,9 +21,10 @@ void DrawPortrait(Canvas c, size_t x, size_t y) {
 }
 
 void DrawUsername(Canvas c, size_t x, size_t y) {
+  UserInfo user = GetUserInfo();
 	WriteCanvasH(c, x, y, "NEOCARD Version 1.0");
 	WriteCanvasH(c, x, y+1, "--------------------------------");
-	WriteCanvasH(c, x, y+2, "USER: jason@JasonArch");
+	WriteCanvasH(c, x, y+2, user.username);
 	WriteCanvasH(c, x, y+3, "=============================");
 }
 

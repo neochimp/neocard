@@ -1,5 +1,7 @@
 #include "neocard.h"
-
-void Neocard() {
-
+#include "polling/commands.h"
+#include "canvas/canvas.h"
+void Neocard() { 
+  Canvas can = CardCanvas();
+  PrintCanvas(can);
 }
