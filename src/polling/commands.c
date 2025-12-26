@@ -15,6 +15,7 @@ struct Top3Commands MostUsedCommands() {
     ParseHistory(".bash_history", &commands);
   }else{ 
     printf("idk where the shell history for that is lol\n");
+		EZ_ERROR("Currently unsupported shell history\n");
   }
 
   return commands;
@@ -31,7 +32,10 @@ void ParseHistory(char* historyFile, struct Top3Commands* commands){
   
   //two halves of the command that will return the top 3 most used commands
   const char command1[] = "cut -d';' -f2- ";
+  
+  //two diff versions one with and without counts
   const char command2[] = " | awk '{print $1}' | sort | uniq -c | sort -nr | head -3 | awk '{print $2}'";
+  //const char command2[] = " | awk '{print $1}' | sort | uniq -c | sort -nr | head -3 | awk '{print $2 \" (\" $1 \")\" }'";
   
   //concatenate the full command with the proper filepath
   size_t commandSize = strlen(command1) + strlen(historyPath) + strlen(command2) + 3;
@@ -43,10 +47,22 @@ void ParseHistory(char* historyFile, struct Top3Commands* commands){
   EZ_ASSERT(fp!=NULL, "Command failed\n");
   
   //assign the command output to the struct
+  char tmp[BUFFER_SIZE];
   fgets(commands->top1, BUFFER_SIZE, fp);
-  fgets(commands->top2, BUFFER_SIZE, fp);
-  fgets(commands->top3, BUFFER_SIZE, fp);
+  snprintf(tmp, BUFFER_SIZE, "1. %s", commands->top1);
+  strcpy(commands->top1, tmp);
+  rstrip(commands->top1); 
 
+  fgets(commands->top2, BUFFER_SIZE, fp);
+  snprintf(tmp, BUFFER_SIZE, "2. %s", commands->top2);
+  strcpy(commands->top2, tmp);
+  rstrip(commands->top2); 
+  
+  fgets(commands->top3, BUFFER_SIZE, fp);
+  snprintf(tmp, BUFFER_SIZE, "3. %s", commands->top3);
+  strcpy(commands->top3, tmp);
+  rstrip(commands->top3); 
+  
   pclose(fp);
   return;
 }

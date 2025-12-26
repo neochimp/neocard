@@ -1,4 +1,6 @@
 #include "graphics.h"
+#include "../polling/commands.h"
+
 
 void DrawLogo(Canvas c, size_t x, size_t y) {
 	WriteCanvasH(c, x, y, "     /\\");
@@ -42,10 +44,11 @@ void DrawShell(Canvas c, size_t x, size_t y) {
 }
 
 void DrawFavorites(Canvas c, size_t x, size_t y) {
-	WriteCanvasH(c, x+2, y, "TOP COMMANDS");
-	WriteCanvasH(c, x, y+1, "1. git");
-	WriteCanvasH(c, x, y+2, "2. pacman");
-	WriteCanvasH(c, x, y+3, "3. greppalicious");
+  Top3Commands commands = MostUsedCommands();
+  WriteCanvasH(c, x+2, y, "TOP COMMANDS");
+	WriteCanvasH(c, x, y+1, commands.top1);
+	WriteCanvasH(c, x, y+2, commands.top2);
+	WriteCanvasH(c, x, y+3, commands.top3);
 }
 
 void DrawProjects(Canvas c, size_t x, size_t y) {

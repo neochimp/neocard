@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 char *ShellName() {
   char *shellRaw = getenv("SHELL");
@@ -12,4 +13,12 @@ char *ShellName() {
   // gets the last instance of '/'
   char *shell = strrchr(shellRaw, '/') + 1;
   return shell;
+}
+
+void rstrip(char *s){
+    size_t len = strlen(s);
+
+    while (len > 0 && isspace((unsigned char)s[len - 1])) {
+        s[--len] = '\0';
+    }
 }

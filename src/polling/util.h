@@ -5,5 +5,5 @@
 
 //returns a string with the shell name i.e. 'zsh', 'bash', etc.
 char *ShellName();
-
+void rstrip(char *s);
 #endif
