@@ -9,7 +9,10 @@ typedef struct Top3Commands {
   char top3[BUFFER_SIZE];
 }Top3Commands;
 
+//Returns a struct with the top 3 most used commands based on shell history
 struct Top3Commands MostUsedCommands();
+
+//helper function for MostUsedCommands()
 void ParseHistory(char* historyFile, struct Top3Commands* commands);
 
 #endif

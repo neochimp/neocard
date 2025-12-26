@@ -5,8 +5,10 @@
 #include <string.h>
 
 struct Top3Commands MostUsedCommands() {
+  //struct that will get passed as a pointer and populated by ParseHistory()
   struct Top3Commands commands;
   char *shell = ShellName();
+  //check a specific name based on what shell we're using
   if(strcmp(shell, "zsh") == 0){
     ParseHistory(".zsh_history", &commands);
   }else if(strcmp(shell, "bash") == 0){
@@ -19,21 +21,28 @@ struct Top3Commands MostUsedCommands() {
 }
 
 void ParseHistory(char* historyFile, struct Top3Commands* commands){
+  //get the path for the current home
   const char *home = getenv("HOME");
   EZ_ASSERT(home!=NULL, "No home\n");
+
+  //get the directory for the specific history file
   char historyPath[BUFFER_SIZE];
   snprintf(historyPath, sizeof(historyPath), "%s/%s", home, historyFile);
-
+  
+  //two halves of the command that will return the top 3 most used commands
   const char command1[] = "cut -d';' -f2- ";
-  const char command2[] = " | awk '{print $1}' | sort | uniq -c | sort -nr | head -10 | awk '{print $2}'";
+  const char command2[] = " | awk '{print $1}' | sort | uniq -c | sort -nr | head -3 | awk '{print $2}'";
+  
+  //concatenate the full command with the proper filepath
   size_t commandSize = strlen(command1) + strlen(historyPath) + strlen(command2) + 3;
- 
   char command[commandSize];
   snprintf(command, commandSize, "%s'%s'%s", command1, historyPath, command2);
 
+  //run the command
   FILE *fp = popen(command, "r");
   EZ_ASSERT(fp!=NULL, "Command failed\n");
   
+  //assign the command output to the struct
   fgets(commands->top1, BUFFER_SIZE, fp);
   fgets(commands->top2, BUFFER_SIZE, fp);
   fgets(commands->top3, BUFFER_SIZE, fp);

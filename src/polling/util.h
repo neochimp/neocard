@@ -3,6 +3,7 @@
 
 #define BUFFER_SIZE 512
 
+//returns a string with the shell name i.e. 'zsh', 'bash', etc.
 char *ShellName();
 
 #endif
