@@ -29,4 +29,6 @@ void PrintCanvas(Canvas canvas);
 
 void CanvasTest();
 
+Canvas CardCanvas();
+
 #endif

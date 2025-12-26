@@ -1,4 +1,5 @@
 #include "canvas.h"
+#include "canvas/graphics.h"
 #include <string.h>
 #include <easymemory.h>
 #include <easylogger.h>
@@ -67,11 +68,26 @@ void PrintCanvas(Canvas canvas) {
 }
 
 void CanvasTest() {
+	Canvas c = CardCanvas();
+	PrintCanvas(c);
+	CleanCanvas(c);
+}
+
+Canvas CardCanvas() {
 	Canvas c = GenerateCanvas(67, 21);
 	WriteCanvasH(c, 0, 0, "-------------------------------------------------------------------");
 	WriteCanvasV(c, 0, 1, "|||||||||||||||||||");
 	WriteCanvasV(c, 66, 1, "|||||||||||||||||||");
 	WriteCanvasH(c, 0, 20, "-------------------------------------------------------------------");
-	PrintCanvas(c);
-	CleanCanvas(c);
+	DrawLogo(c, 53, 1);
+	DrawPortrait(c, 2, 1);
+	DrawUsername(c, 22, 1);
+	DrawAge(c, 22, 6);
+	DrawKernel(c, 22, 7);
+	DrawPackages(c, 22, 8);
+	DrawShell(c, 22, 9);
+	DrawFavorites(c, 2, 13);
+	DrawProjects(c, 2, 19);
+	DrawBadges(c, 22, 12);
+	return c;
 }
