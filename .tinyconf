@@ -1,0 +1,4 @@
+PROJECT src
+MAIN main.c
+INCLUDE vendor/EasyC/include
+SOURCE vendor/EasyC/include
