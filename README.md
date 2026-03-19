@@ -1,8 +1,14 @@
-<h1 align="center">
-    <picture>
-      <img height="400px" style="margin: 0; padding: 0" src="logo-ascii.png">
-    </picture>
-</h1>
+<div style="display: block; margin: auto; text-align: center; width: fit-content;">
+
+```
+                                            .___
+  ____   ____  ____   ____ _____ _______  __| _/
+ /    \_/ __ \/  _ \_/ ___\\__  \\_  __ \/ __ | 
+|   |  \  ___(  <_> )  \___ / __ \|  | \/ /_/ | 
+|___|  /\___  >____/ \___  >____  /__|  \____ | 
+     \/     \/           \/     \/           \/ 
+```
+<div/>
 
 neocard is a brand new way to show off how much of a Linux beast you are.
 
